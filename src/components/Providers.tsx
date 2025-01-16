@@ -11,8 +11,8 @@ import React, {
   //   useEffect,
   //   useRef,
 } from "react";
-// import { ToastContainer } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import { SessionProvider } from "next-auth/react";
 
 export default function Providers({
@@ -51,10 +51,7 @@ export default function Providers({
   return (
     // <SessionProvider>
     <NextUIProvider>
-      {/* <ToastContainer */}
-      {/* position="bottom-right"
-          hideProgressBar */}
-      {/* /> */}
+      <ToastContainer position="bottom-right" hideProgressBar />
       {children}
     </NextUIProvider>
     // </SessionProvider>

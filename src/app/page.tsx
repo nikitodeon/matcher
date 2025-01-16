@@ -1,46 +1,38 @@
-// import { auth } from "@/auth";
+import { auth, signOut } from "@/auth";
 import { Button } from "@nextui-org/react";
-import Link from "next/link";
+import { FaRegSmile } from "react-icons/fa";
 
 export default async function Home() {
-  // const session = await auth();
+  const session = await auth();
 
   return (
-    <div className="flex flex-col justify-center items-center mt-20 gap-6 text-default">
-      <h1 className="text-4xl font-bold">Welcome to MatchMe App</h1>
-      {/* {session ? (*/}
-      <Button
-        as={Link}
-        href="/members"
-        size="lg"
-        color="default"
-        variant="bordered"
-      >
-        Continue
-      </Button>
-      {/*
-      ) : (
-        <div className="flex flex-row gap-4">
-          <Button
-            as={Link}
-            href="/login"
-            size="lg"
-            color="default"
-            variant="bordered"
+    <div>
+      <h1 className="text-3xl">Hello app!</h1>
+
+      <h3 className="text-2xl font-semibold">User session data:</h3>
+      {session ? (
+        <div>
+          <pre>{JSON.stringify(session, null, 2)}</pre>
+          <form
+            action={async () => {
+              "use server";
+
+              await signOut();
+            }}
           >
-            Login
-          </Button>
-          <Button
-            as={Link}
-            href="/register"
-            size="lg"
-            color="default"
-            variant="bordered"
-          >
-            Register
-          </Button>
+            <Button
+              type="submit"
+              color="primary"
+              variant="bordered"
+              startContent={<FaRegSmile size={20} />}
+            >
+              Sign out
+            </Button>
+          </form>
         </div>
-      )} */}
+      ) : (
+        <div>Not signed in</div>
+      )}
     </div>
   );
 }
