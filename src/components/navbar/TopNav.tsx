@@ -3,67 +3,39 @@ import Link from "next/link";
 import React from "react";
 import { GiSelfLove } from "react-icons/gi";
 import NavLink from "./NavLink";
-//   import { auth } from "@/auth";
-//   import UserMenu from "./UserMenu";
-//   import { getUserInfoForNav } from "@/app/actions/userActions";
-//   import FiltersWrapper from "./FiltersWrapper";
+import { auth } from "@/auth";
+import UserMenu from "./UserMenu";
 
 export default async function TopNav() {
-  // const session = await auth();
-  // const userInfo =
-  //   session?.user && (await getUserInfoForNav());
-
-  const memberLinks = [
-    { href: "/members", label: "Matches" },
-    { href: "/lists", label: "Lists" },
-    { href: "/messages", label: "Messages" },
-  ];
-
-  const adminLinks = [
-    {
-      href: "/admin/moderation",
-      label: "Photo Moderation",
-    },
-  ];
-
-  // const links =
-  //   session?.user.role === "ADMIN"
-  //     ? adminLinks
-  //     : memberLinks;
+  const session = await auth();
   return (
-    <>
-      <Navbar
-        maxWidth="full"
-        className="bg-gradient-to-r from-pink-400 via-red-400 to-pink-600"
-        classNames={{
-          item: [
-            "text-xl",
-            "text-white",
-            "uppercase",
-            "data-[active=true]:text-yellow-200",
-          ],
-        }}
-      >
-        <NavbarBrand as={Link} href="/">
-          <GiSelfLove size={40} className="text-gray-200" />
-          <div className="font-bold text-3xl flex">
-            <span className="text-gray-200">MatchMe</span>
-          </div>
-        </NavbarBrand>
-        <NavbarContent justify="center">
-          {/* {session &&
-              links.map((item) => (
-                <NavLink
-                  key={item.href}
-                  href={item.href}
-                  label={item.label}
-                />
-              ))} */}
-        </NavbarContent>
-        <NavbarContent justify="end">
-          {/* {userInfo ? (
-              <UserMenu userInfo={userInfo} />
-            ) : ( */}
+    <Navbar
+      maxWidth="full"
+      className="bg-gradient-to-r from-pink-400 via-red-400 to-pink-600"
+      classNames={{
+        item: [
+          "text-xl",
+          "text-white",
+          "uppercase",
+          "data-[active=true]:text-yellow-200",
+        ],
+      }}
+    >
+      <NavbarBrand as={Link} href="/">
+        <GiSelfLove size={40} className="text-gray-200" />
+        <div className="font-bold text-3xl flex">
+          <span className="text-gray-200">MatchMe</span>
+        </div>
+      </NavbarBrand>
+      <NavbarContent justify="center">
+        <NavLink href="/members" label="Matches" />
+        <NavLink href="/lists" label="Lists" />
+        <NavLink href="/messages" label="Messages" />
+      </NavbarContent>
+      <NavbarContent justify="end">
+        {session?.user ? (
+          <UserMenu user={session.user} />
+        ) : (
           <>
             <Button
               as={Link}
@@ -82,10 +54,8 @@ export default async function TopNav() {
               Register
             </Button>
           </>
-          {/* )} */}
-        </NavbarContent>
-      </Navbar>
-      {/* <FiltersWrapper /> */}
-    </>
+        )}
+      </NavbarContent>
+    </Navbar>
   );
 }
