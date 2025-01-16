@@ -7,15 +7,15 @@ const prisma = new PrismaClient();
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   //   providers: [],
-  callbacks: {
-    async session({ session, token }) {
-      if (token.sub && session.user) {
-        session.user.id = token.sub;
-      }
+  //   callbacks: {
+  //     async session({ session, token }) {
+  //       if (token.sub && session.user) {
+  //         session.user.id = token.sub;
+  //       }
 
-      return session;
-    },
-  },
+  //       return session;
+  //     },
+  //   },
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
   ...authConfig,

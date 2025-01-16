@@ -13,6 +13,7 @@
     "@hookform/resolvers": "^3.10.0",
     "@nextui-org/react": "^2.6.11",
     "@prisma/client": "^6.2.1",
+    "bcryptjs": "^2.4.3",
     "framer-motion": "^11.18.0",
     "next": "15.1.4",
     "next-auth": "^5.0.0-beta.25",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
