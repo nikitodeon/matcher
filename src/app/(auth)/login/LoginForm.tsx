@@ -6,9 +6,9 @@ import { GiPadlock } from "react-icons/gi";
 import { useForm } from "react-hook-form";
 import { loginSchema, LoginSchema } from "@/lib/schemas/LoginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-// import { signInUser } from "@/app/actions/authActions";
-// import { useRouter } from "next/navigation";
-// import { toast } from "react-toastify";
+import { signInUser } from "@/app/actions/authActions";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 import Link from "next/link";
 // import SocialLogin from "./SocialLogin";
 
@@ -21,17 +21,16 @@ export default function LoginForm() {
     resolver: zodResolver(loginSchema),
     mode: "onTouched",
   });
-  //   const router = useRouter();
+  const router = useRouter();
 
   const onSubmit = async (data: LoginSchema) => {
-    console.log(data);
-    //     const result = await signInUser(data);
-    //     if (result.status === "success") {
-    //       router.push("/members");
-    //       router.refresh();
-    //     } else {
-    //       toast.error(result.error as string);
-    //     }
+    const result = await signInUser(data);
+    if (result.status === "success") {
+      router.push("/members");
+      router.refresh();
+    } else {
+      toast.error(result.error as string);
+    }
   };
 
   return (
