@@ -8,16 +8,9 @@ export default async function MemberDetailedPage({
 }: {
   params: { userId: string };
 }) {
-  const member = await getMemberByUserId(
-    params.userId
-  );
+  const member = await getMemberByUserId(params.userId);
 
   if (!member) return notFound();
 
-  return (
-    <CardInnerWrapper
-      header="Profile"
-      body={member.description}
-    />
-  );
+  return <CardInnerWrapper header="Profile" body={member.description} />;
 }
