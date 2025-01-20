@@ -40,7 +40,7 @@ export default function Providers({
   }, [setUnreadCount, userId]);
 
   // Подключаем каналы только на клиенте
-  usePresenceChannel();
+  usePresenceChannel(userId);
   useNotificationChannel(userId);
 
   return (
