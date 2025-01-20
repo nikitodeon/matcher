@@ -10,13 +10,17 @@ export default function PaginationComponent({
 }: {
   totalCount: number;
 }) {
-  const { setPage, setPageSize, setPagination, pagination } =
-    usePaginationStore((state) => ({
-      setPage: state.setPage,
-      setPageSize: state.setPageSize,
-      setPagination: state.setPagination,
-      pagination: state.pagination,
-    }));
+  // const { setPage, setPageSize, setPagination, pagination } =
+  //   usePaginationStore((state) => ({
+  //     setPage: state.setPage,
+  //     setPageSize: state.setPageSize,
+  //     setPagination: state.setPagination,
+  //     pagination: state.pagination,
+  //   }));
+  const setPage = usePaginationStore((state) => state.setPage);
+  const setPageSize = usePaginationStore((state) => state.setPageSize);
+  const setPagination = usePaginationStore((state) => state.setPagination);
+  const pagination = usePaginationStore((state) => state.pagination);
 
   const { pageNumber, pageSize, totalPages } = pagination;
 

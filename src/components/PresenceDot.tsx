@@ -8,9 +8,7 @@ type Props = {
 };
 
 export default function PresenceDot({ member }: Props) {
-  const { membersId } = usePresenceStore((state) => ({
-    membersId: state.membersId,
-  }));
+  const membersId = usePresenceStore((state) => state.membersId);
 
   const isOnline = membersId.indexOf(member.userId) !== -1;
 

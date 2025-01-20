@@ -4,11 +4,11 @@ import { Channel, Members } from "pusher-js";
 import { pusherClient } from "@/lib/pusher";
 
 export const usePresenceChannel = () => {
-  const { set, add, remove } = usePresenceStore((state) => ({
-    set: state.set,
-    add: state.add,
-    remove: state.remove,
-  }));
+  // Передаём функции напрямую в usePresenceStore для предотвращения бесконечного рендера
+  const set = usePresenceStore((state) => state.set);
+  const add = usePresenceStore((state) => state.add);
+  const remove = usePresenceStore((state) => state.remove);
+
   const channelRef = useRef<Channel | null>(null);
 
   const handleSetMembers = useCallback(

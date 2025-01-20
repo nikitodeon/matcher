@@ -17,13 +17,15 @@ export default function Providers({
   userId: string | null;
 }) {
   const isUnreadCountSet = useRef(false);
-  const { updateUnreadCount } = useMessageStore((state) => ({
-    updateUnreadCount: state.updateUnreadCount,
-  }));
+
+  // Меморизируем селектор Zustand
+  const updateUnreadCount = useMessageStore((state) => state.updateUnreadCount);
 
   const setUnreadCount = useCallback(
     (amount: number) => {
-      updateUnreadCount(amount);
+      if (typeof window !== "undefined") {
+        updateUnreadCount(amount);
+      }
     },
     [updateUnreadCount]
   );
@@ -32,12 +34,15 @@ export default function Providers({
     if (!isUnreadCountSet.current && userId) {
       getUnreadMessageCount().then((count) => {
         setUnreadCount(count);
+        isUnreadCountSet.current = true; // Перемещено внутрь, чтобы не зависеть от выполнения API.
       });
-      isUnreadCountSet.current = true;
     }
   }, [setUnreadCount, userId]);
+
+  // Подключаем каналы только на клиенте
   usePresenceChannel();
   useNotificationChannel(userId);
+
   return (
     <NextUIProvider>
       <ToastContainer position="bottom-right" hideProgressBar />

@@ -12,14 +12,11 @@ export const useFilters = () => {
 
   const { filters, setFilters } = useFilterStore();
 
-  const { pageNumber, pageSize, setPage, totalCount } = usePaginationStore(
-    (state) => ({
-      pageNumber: state.pagination.pageNumber,
-      pageSize: state.pagination.pageSize,
-      setPage: state.setPage,
-      totalCount: state.pagination.totalCount,
-    })
-  );
+  // Извлечение значений напрямую из usePaginationStore
+  const pageNumber = usePaginationStore((state) => state.pagination.pageNumber);
+  const pageSize = usePaginationStore((state) => state.pagination.pageSize);
+  const totalCount = usePaginationStore((state) => state.pagination.totalCount);
+  const setPage = usePaginationStore((state) => state.setPage);
 
   const { gender, ageRange, orderBy, withPhoto } = filters;
 

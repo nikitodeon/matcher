@@ -38,9 +38,7 @@ export default function MessageSidebar() {
     router.replace(`${pathname}?${params}`);
   };
 
-  const { unreadCount } = useMessageStore((state) => ({
-    unreadCount: state.unreadCount,
-  }));
+  const unreadCount = useMessageStore((state) => state.unreadCount);
 
   return (
     <div className="flex flex-col shadow-md rounded-lg cursor-pointer">

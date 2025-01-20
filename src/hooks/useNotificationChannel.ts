@@ -10,10 +10,10 @@ export const useNotificationChannel = (userId: string | null) => {
   const channelRef = useRef<Channel | null>(null);
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { add, updateUnreadCount } = useMessageStore((state) => ({
-    add: state.add,
-    updateUnreadCount: state.updateUnreadCount,
-  }));
+
+  // Извлекаем свойства отдельно, чтобы избежать создания нового объекта
+  const add = useMessageStore((state) => state.add);
+  const updateUnreadCount = useMessageStore((state) => state.updateUnreadCount);
 
   const handleNewMessage = useCallback(
     (message: MessageDto) => {

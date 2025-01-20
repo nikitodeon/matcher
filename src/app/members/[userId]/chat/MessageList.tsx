@@ -25,9 +25,7 @@ export default function MessageList({
 
   const setReadCount = useRef(false);
 
-  const { updateUnreadCount } = useMessageStore((state) => ({
-    updateUnreadCount: state.updateUnreadCount,
-  }));
+  const updateUnreadCount = useMessageStore((state) => state.updateUnreadCount);
 
   useEffect(() => {
     if (!setReadCount.current) {

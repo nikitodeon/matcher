@@ -1,30 +1,32 @@
 import PusherServer from "pusher";
 import PusherClient from "pusher-js";
 
-const CLUSTER = "us3";
+const CLUSTER = process.env.PUSHER_CLUSTER || "eu"; // Используем кластер из переменной окружения
 
 declare global {
   var pusherServerInstance: PusherServer | undefined;
   var pusherClientInstance: PusherClient | undefined;
 }
 
+// Создаём экземпляр серверного клиента Pusher
 if (!global.pusherServerInstance) {
   global.pusherServerInstance = new PusherServer({
-    appId: process.env.PUSHER_APP_ID!,
-    key: process.env.NEXT_PUBLIC_PUSHER_APP_KEY!,
-    secret: process.env.PUSHER_SECRET!,
-    cluster: CLUSTER,
-    useTLS: true,
+    appId: process.env.PUSHER_APP_ID!, // ID приложения
+    key: process.env.NEXT_PUBLIC_PUSHER_APP_KEY!, // Публичный ключ
+    secret: process.env.PUSHER_SECRET!, // Секретный ключ
+    cluster: CLUSTER, // Кластер
+    useTLS: true, // Использование HTTPS
   });
 }
 
+// Создаём экземпляр клиентского клиента Pusher
 if (!global.pusherClientInstance) {
   global.pusherClientInstance = new PusherClient(
-    process.env.NEXT_PUBLIC_PUSHER_APP_KEY!,
+    process.env.NEXT_PUBLIC_PUSHER_APP_KEY!, // Публичный ключ
     {
-      cluster: CLUSTER,
+      cluster: CLUSTER, // Кластер
       channelAuthorization: {
-        endpoint: "/api/pusher-auth",
+        endpoint: "/api/pusher-auth", // Точка авторизации
         transport: "ajax",
       },
     }

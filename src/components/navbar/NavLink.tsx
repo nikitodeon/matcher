@@ -13,9 +13,7 @@ type Props = {
 
 export default function NavLink({ href, label }: Props) {
   const pathname = usePathname();
-  const { unreadCount } = useMessageStore((state) => ({
-    unreadCount: state.unreadCount,
-  }));
+  const unreadCount = useMessageStore((state) => state.unreadCount);
 
   return (
     <NavbarItem isActive={pathname === href} as={Link} href={href}>

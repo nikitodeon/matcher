@@ -8,9 +8,7 @@ type Props = {
 };
 
 export default function PresenceAvatar({ userId, src }: Props) {
-  const { membersId } = usePresenceStore((state) => ({
-    membersId: state.membersId,
-  }));
+  const membersId = usePresenceStore((state) => state.membersId);
 
   const isOnline = userId && membersId.indexOf(userId) !== -1;
 

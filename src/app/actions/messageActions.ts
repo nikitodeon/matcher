@@ -32,10 +32,19 @@ export async function createMessage(
     });
     const messageDto = mapMessageToMessageDto(message);
 
+    console.log(
+      "Triggering message:new for channel:",
+      createChatId(userId, recipientUserId)
+    );
     await pusherServer.trigger(
       createChatId(userId, recipientUserId),
       "message:new",
       messageDto
+    );
+
+    console.log(
+      "Triggering private message:new for recipient:",
+      recipientUserId
     );
     await pusherServer.trigger(
       `private-${recipientUserId}`,
@@ -45,7 +54,7 @@ export async function createMessage(
 
     return { status: "success", data: messageDto };
   } catch (error) {
-    console.log(error);
+    console.error("Error in createMessage:", error);
     return { status: "error", error: "Something went wrong" };
   }
 }
@@ -87,6 +96,7 @@ export async function getMessageThread(recipientId: string) {
         )
         .map((m) => m.id);
 
+      console.log("Marking messages as read:", unreadMessageIds);
       await prisma.message.updateMany({
         where: {
           senderId: recipientId,
@@ -98,6 +108,11 @@ export async function getMessageThread(recipientId: string) {
 
       readCount = unreadMessageIds.length;
 
+      console.log(
+        "Triggering messages:read for channel:",
+        createChatId(recipientId, userId)
+      );
+      console.log("Unread message IDs:", unreadMessageIds);
       await pusherServer.trigger(
         createChatId(recipientId, userId),
         "messages:read",
@@ -110,7 +125,7 @@ export async function getMessageThread(recipientId: string) {
       readCount,
     };
   } catch (error) {
-    console.log(error);
+    console.error("Error in getMessageThread:", error);
     throw error;
   }
 }
@@ -157,7 +172,7 @@ export async function getMessagesByContainer(
 
     return { messages: messagesToReturn, nextCursor };
   } catch (error) {
-    console.log(error);
+    console.error("Error in getMessagesByContainer:", error);
     throw error;
   }
 }
@@ -200,7 +215,7 @@ export async function deleteMessage(messageId: string, isOutbox: boolean) {
       });
     }
   } catch (error) {
-    console.log(error);
+    console.error("Error in deleteMessage:", error);
     throw error;
   }
 }
@@ -217,7 +232,7 @@ export async function getUnreadMessageCount() {
       },
     });
   } catch (error) {
-    console.log(error);
+    console.error("Error in getUnreadMessageCount:", error);
     throw error;
   }
 }
