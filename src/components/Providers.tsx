@@ -12,9 +12,11 @@ import "react-toastify/dist/ReactToastify.css";
 export default function Providers({
   children,
   userId,
+  profileComplete,
 }: {
   children: ReactNode;
   userId: string | null;
+  profileComplete: boolean;
 }) {
   const isUnreadCountSet = useRef(false);
 
@@ -40,8 +42,8 @@ export default function Providers({
   }, [setUnreadCount, userId]);
 
   // Подключаем каналы только на клиенте
-  usePresenceChannel(userId);
-  useNotificationChannel(userId);
+  usePresenceChannel(userId, profileComplete);
+  useNotificationChannel(userId, profileComplete);
 
   return (
     <NextUIProvider>
