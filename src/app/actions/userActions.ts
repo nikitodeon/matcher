@@ -8,7 +8,7 @@ import { ActionResult } from "@/types";
 import { Member, Photo } from "@prisma/client";
 import { getAuthUserId } from "./authActions";
 import prisma from "@/lib/prisma";
-// import { cloudinary } from "@/lib/cloudinary";
+// import { cloudinary } from '@/lib/cloudinary';
 
 export async function updateMemberProfile(
   data: MemberEditSchema,
@@ -73,6 +73,8 @@ export async function addImage(url: string, publicId: string) {
 
 export async function setMainImage(photo: Photo) {
   try {
+    if (!photo.isApproved)
+      throw new Error("Only approved photos can be set to main image");
     const userId = await getAuthUserId();
 
     await prisma.user.update({
@@ -90,27 +92,27 @@ export async function setMainImage(photo: Photo) {
   }
 }
 
-// export async function deleteImage(photo: Photo) {
-//   try {
-//     const userId = await getAuthUserId();
+export async function deleteImage(photo: Photo) {
+  try {
+    const userId = await getAuthUserId();
 
-//     if (photo.publicId) {
-//       await cloudinary.v2.uploader.destroy(photo.publicId);
-//     }
+    // if (photo.publicId) {
+    //     await cloudinary.v2.uploader.destroy(photo.publicId);
+    // }
 
-//     return prisma.member.update({
-//       where: { userId },
-//       data: {
-//         photos: {
-//           delete: { id: photo.id },
-//         },
-//       },
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     throw error;
-//   }
-// }
+    return prisma.member.update({
+      where: { userId },
+      data: {
+        photos: {
+          delete: { id: photo.id },
+        },
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
 
 export async function getUserInfoForNav() {
   try {

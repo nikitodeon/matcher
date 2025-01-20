@@ -291,3 +291,13 @@ export async function completeSocialLoginProfile(
     throw error;
   }
 }
+
+export async function getUserRole() {
+  const session = await auth();
+
+  const role = session?.user.role;
+
+  if (!role) throw new Error("Not in role");
+
+  return role;
+}

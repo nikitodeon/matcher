@@ -1,12 +1,13 @@
 "use client";
 
-import { /*deleteImage, */ setMainImage } from "@/app/actions/userActions";
+import { deleteImage, setMainImage } from "@/app/actions/userActions";
 import { Photo } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import DeleteButton from "./DeleteButton";
 import MemberImage from "./MemberImage";
 import StarButton from "./StarButton";
+import { toast } from "react-toastify";
 
 type Props = {
   photos: Photo[] | null;
@@ -29,7 +30,28 @@ export default function MemberPhotos({ photos, editing, mainImageUrl }: Props) {
       id: photo.id,
       type: "main",
     });
-    await setMainImage(photo);
+    try {
+      await setMainImage(photo);
+      router.refresh();
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setLoading({
+        isLoading: false,
+        id: "",
+        type: "",
+      });
+    }
+  };
+
+  const onDelete = async (photo: Photo) => {
+    if (photo.url === mainImageUrl) return null;
+    setLoading({
+      isLoading: true,
+      id: photo.id,
+      type: "delete",
+    });
+    await deleteImage(photo);
     router.refresh();
     setLoading({
       isLoading: false,
@@ -37,22 +59,6 @@ export default function MemberPhotos({ photos, editing, mainImageUrl }: Props) {
       type: "",
     });
   };
-
-  // const onDelete = async (photo: Photo) => {
-  //   if (photo.url === mainImageUrl) return null;
-  //   setLoading({
-  //     isLoading: true,
-  //     id: photo.id,
-  //     type: "delete",
-  //   });
-  //   await deleteImage(photo);
-  //   router.refresh();
-  //   setLoading({
-  //     isLoading: false,
-  //     id: "",
-  //     type: "",
-  //   });
-  // };
 
   return (
     <div className="grid grid-cols-5 gap-3 p-5">
@@ -76,7 +82,7 @@ export default function MemberPhotos({ photos, editing, mainImageUrl }: Props) {
                   />
                 </div>
                 <div
-                  // onClick={() => onDelete(photo)}
+                  onClick={() => onDelete(photo)}
                   className="absolute top-3 right-3 z-50"
                 >
                   <DeleteButton
