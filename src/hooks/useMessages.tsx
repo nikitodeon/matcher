@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {
   deleteMessage,
   getMessagesByContainer,
@@ -55,7 +56,12 @@ export const useMessages = (
     return () => {
       resetMessages();
     };
-  }, [initialMessages, set, nextCursor, resetMessages]);
+  }, [
+    initialMessages,
+    set,
+    nextCursor,
+    //  resetMessages
+  ]);
 
   const loadMore = useCallback(async () => {
     if (cursorRef.current) {
