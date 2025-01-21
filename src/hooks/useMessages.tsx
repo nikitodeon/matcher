@@ -27,14 +27,21 @@ export const useMessages = (
   initialMessages: MessageDto[],
   nextCursor?: string
 ) => {
-  const { set, remove, messages, updateUnreadCount, resetMessages } =
-    useMessageStore((state) => ({
-      set: state.set,
-      remove: state.remove,
-      messages: state.messages,
-      updateUnreadCount: state.updateUnreadCount,
-      resetMessages: state.resetMessages,
-    }));
+  // const pageNumber = usePaginationStore((state) => state.pagination.pageNumber);
+  const set = useMessageStore((state) => state.set);
+  const remove = useMessageStore((state) => state.remove);
+  const messages = useMessageStore((state) => state.messages);
+  const updateUnreadCount = useMessageStore((state) => state.updateUnreadCount);
+  const resetMessages = useMessageStore((state) => state.resetMessages);
+
+  // const { set, remove, messages, updateUnreadCount, resetMessages } =
+  //   useMessageStore((state) => ({
+  //     set: state.set,
+  //     remove: state.remove,
+  //     messages: state.messages,
+  //     updateUnreadCount: state.updateUnreadCount,
+  //     resetMessages: state.resetMessages,
+  //   }));
 
   const cursorRef = useRef(nextCursor);
 
