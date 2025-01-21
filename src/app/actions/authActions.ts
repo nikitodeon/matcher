@@ -7,7 +7,6 @@ import { LoginSchema } from "@/lib/schemas/LoginSchema";
 import {
   combinedRegisterSchema,
   ProfileSchema,
-  registerSchema,
   RegisterSchema,
 } from "@/lib/schemas/RegisterSchema";
 import { generateToken, getTokenByToken } from "@/lib/tokens";

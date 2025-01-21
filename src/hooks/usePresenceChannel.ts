@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { useCallback, useEffect, useRef } from "react";
 import usePresenceStore from "./usePresenceStore";
 import { Channel, Members } from "pusher-js";

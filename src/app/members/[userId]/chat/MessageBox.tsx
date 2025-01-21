@@ -3,7 +3,7 @@
 import { MessageDto } from "@/types";
 import React, { useRef } from "react";
 import clsx from "clsx";
-import { Avatar } from "@nextui-org/react";
+// import { Avatar } from "@nextui-org/react";
 import { useEffect } from "react";
 import { timeAgo } from "@/lib/util";
 import PresenceAvatar from "@/components/PresenceAvatar";

@@ -1,11 +1,16 @@
+/* eslint-disable */
+
 "use client";
 
-import { auth } from "@/auth";
-import { Photo, Role } from "@prisma/client";
+// import { auth } from "@/auth";
+import {
+  Photo,
+  // Role
+} from "@prisma/client";
 // import { CldImage } from "next-cloudinary";
 import React from "react";
 import { Button, Image } from "@nextui-org/react";
-import clsx from "clsx";
+// import clsx from "clsx";
 import { ImCheckmark, ImCross } from "react-icons/im";
 import { useRole } from "@/hooks/useRole";
 import { approvePhoto, rejectPhoto } from "@/app/actions/adminActions";

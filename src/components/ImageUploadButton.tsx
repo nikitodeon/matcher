@@ -1,11 +1,11 @@
 "use client";
 
-import React from "react";
+// import React from "react";
 // import {
 //   CldUploadButton,
 //   CloudinaryUploadWidgetResults,
 // // } from "next-cloudinary";
-import { HiPhoto } from "react-icons/hi2";
+// import { HiPhoto } from "react-icons/hi2";
 
 // type Props = {
 //   onUploadImage: (
@@ -17,8 +17,8 @@ export default function ImageUploadButton(
   {
     //   onUploadImage,
   }
-) // : Props
-{
+) {
+  // : Props
   //   return (
   //     <CldUploadButton
   //       options={{ maxFiles: 1 }}
